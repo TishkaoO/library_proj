@@ -1,0 +1,18 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <changeSet id="0003_alter_book_reader" author="Kate">
+        <preConditions onFail="MARK_RAN">
+            <tableExists schemaName="public" tableName="book_reader"/>
+            <not>
+                <columnExists schemaName="public" tableName="book_reader" columnName="reader_ticket"/>
+            </not>
+        </preConditions>
+        <addColumn schemaName="public" tableName="book_reader">
+            <column name="reader_ticket"
+                    type="varchar"
+                    remarks="Номер читательского билета"/>
+        </addColumn>
+        <rollback>
+            <dropColumn schemaName="public" tableName="book_reader" columnName="reader_ticket"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

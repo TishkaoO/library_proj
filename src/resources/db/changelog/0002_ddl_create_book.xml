@@ -1,0 +1,36 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <changeSet id="0002_ddl_create_book" author="Kate">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="book"/>
+            </not>
+        </preConditions>
+        <createTable tableName="book">
+            <column name="book_id_pk" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column
+                    name="name" type="varchar" remarks="Название книги">
+            </column>
+            <column
+                    name="genre" type="varchar" remarks="Жанр книги">
+            </column>
+            <column
+                    name="name_author" type="varchar" remarks="Имя автора">
+            </column>
+            <column
+                    name="start_read_date" type="date" remarks="Дата выдачи книги">
+            </column>
+            <column
+                    name="end_read_date" type="date" remarks="Дата когда нужно вернуть книгу">
+            </column>
+            <column name="reader_id_fk" type="bigint">
+                <constraints foreignKeyName="reader_id_fk"
+                             references="book_reader(book_reader_id_pk)"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="book_reader"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
